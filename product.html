@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroPods Pro Max - Buy Now</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 500px; margin: 50px auto; padding: 20px; text-align: center; }
+        .product-card { border: 1px solid #ddd; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .price { font-size: 28px; font-weight: bold; color: #333; margin: 15px 0; }
+        .btn-checkout { background: #ff4757; color: white; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; }
+        .btn-checkout:hover { background: #ff6b81; }
+        .debug-panel { background: #2f3542; color: #a4b0be; padding: 15px; border-radius: 5px; font-family: monospace; margin-top: 30px; font-size: 13px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="product-card">
+        <h1>AeroPods Pro Max</h1>
+        <p>Premium Noise-Cancelling Headphones</p>
+        <div class="price">$249.99</div>
+        <button class="btn-checkout" id="buy-btn">Complete Purchase 💰</button>
+    </div>
+
+    <div class="debug-panel">
+        <div id="conversion-log">Checking for tracking cookie/session...</div>
+    </div>
+
+    <script>
+        // --- SIMULATED EVERFLOW CONVERSION SCRIPT ---
+        
+        // 1. Look for the transaction ID in the URL or Session Storage
+        const urlParams = new URLSearchParams(window.location.search);
+        let transactionId = urlParams.get('_ef_tid') || sessionStorage.getItem('ef_transaction_id');
+        const logDiv = document.getElementById('conversion-log');
+
+        if (transactionId) {
+            logDiv.innerHTML = `🔗 Tracking Found!<br>• Active Transaction ID: <strong style="color:white;">${transactionId}</strong><br><br>Click the "Complete Purchase" button above to fire the conversion pixel.`;
+        } else {
+            logDiv.innerHTML = `⚠️ No Tracking Data Found. If you purchase now, the affiliate will get $0 commission. Go back to index.html and make sure you use the test parameters.`;
+        }
+
+        // 2. Fire conversion postback when button is clicked
+        document.getElementById('buy-btn').addEventListener('click', () => {
+            if (transactionId) {
+                logDiv.innerHTML = `🎉 <strong style="color:#2ed573;">CONVERSION SUCCESSFUL!</strong><br>Sent Transaction <strong style="color:white;">${transactionId}</strong> to Everflow.<br>Affiliate commission has been locked in.`;
+                console.log("Everflow Conversion Postback Fired successfully for:", transactionId);
+            } else {
+                alert("Purchase went through, but no affiliate tracking ID was present!");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVibe | Top 3 Gadgets of 2026</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 700px; margin: 0 auto; padding: 20px; color: #333; }
+        header { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 30px; }
+        .logo { font-weight: bold; font-size: 24px; color: #ff4757; }
+        .post-meta { color: #777; font-size: 14px; }
+        .listicle-item { background: #f9f9f9; border: 1px solid #ddd; padding: 20px; margin-bottom: 25px; border-radius: 8px; }
+        .btn-buy { display: inline-block; background: #2ed573; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 10px; }
+        .btn-buy:hover { background: #26af5f; }
+        .debug-panel { background: #2f3542; color: #a4b0be; padding: 15px; border-radius: 5px; font-family: monospace; margin-top: 40px; font-size: 13px; }
+        .debug-title { color: #ff6b81; font-weight: bold; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">⚡ TechVibe Magazine</div>
+        <div class="post-meta">Published July 2026 • 5 min read</div>
+    </header>
+
+    <main>
+        <h1>The 3 Life-Changing Gadgets You Need in 2026</h1>
+        <p>We tested dozens of the latest tech releases this year. If you want to upgrade your daily routine, these are the absolute best items worth your money.</p>
+
+        <!-- Listicle Item 1 -->
+        <div class="listicle-item">
+            <h2>1. AeroPods Pro Max (2026 Edition)</h2>
+            <p>The active noise cancellation on these new headphones is scary good. It completely blocks out coffee shop chatter and subway noise.</p>
+            <a href="product.html" class="btn-buy track-link">Check Price on Amazon &rarr;</a>
+        </div>
+
+        <!-- Listicle Item 2 -->
+        <div class="listicle-item">
+            <h2>2. ChargeGrip Magnetic Power Bank</h2>
+            <p>Never run out of battery again. This ultra-thin charger snaps right to the back of your phone and charges it to full in 20 minutes.</p>
+            <a href="product.html" class="btn-buy track-link">View Deal Online &rarr;</a>
+        </div>
+    </main>
+
+    <!-- Debug Panel so you can see what the script is doing without opening DevTools -->
+    <div class="debug-panel">
+        <div class="debug-title">[EVERFLOW MOCK SCRIPT LOGS]</div>
+        <div id="debug-log">Waiting for URL parameters...</div>
+    </div>
+
+    <script>
+        // --- SIMULATED EVERFLOW SCRIPT ---
+        
+        // 1. Grab parameters from the URL (e.g., ?oid=123&affid=456)
+        const urlParams = new URLSearchParams(window.location.search);
+        const offerId = urlParams.get('oid');
+        const affiliateId = urlParams.get('affid');
+        const debugLog = document.getElementById('debug-log');
+
+        if (offerId && affiliateId) {
+            // Fake creating a Transaction ID like Everflow does
+            const mockTransactionId = "EF_TID_" + Math.random().toString(36).substr(2, 9).toUpperCase();
+            
+            // Save it to Session Storage so the next page can read it (simulating a tracking cookie)
+            sessionStorage.setItem('ef_transaction_id', mockTransactionId);
+            
+            debugLog.innerHTML = `✅ Successfully captured click!<br>• Offer ID: ${offerId}<br>• Partner ID: ${affid}<br>• Generated Transaction ID: ${mockTransactionId}<br><br>👉 Now click one of the green buttons above to test the redirect!`;
+            console.log("Everflow Click Registered:", { offerId, affiliateId, mockTransactionId });
+
+            // 2. Direct Linking Script Magic: Append the transaction ID to outbound URLs
+            const trackingLinks = document.querySelectorAll('.track-link');
+            trackingLinks.forEach(link => {
+                const currentHref = link.getAttribute('href');
+                link.setAttribute('href', `${currentHref}?_ef_tid=${mockTransactionId}`);
+            });
+        } else {
+            debugLog.innerHTML = `❌ Missing tracking parameters.<br>To test this properly, add this to the end of your browser's address bar and press Enter:<br><br><strong style="color:white;">?oid=999&affid=777</strong>`;
+        }
+    </script>
+</body>
+</html>
