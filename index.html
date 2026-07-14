@@ -69,14 +69,15 @@ EF.click({
         <script>
   window.onload = function() {
   var urlParams = new URLSearchParams(window.location.search);
-  var affid = urlParams.get("affid");
+  var affid = urlParams.get("affid2");
+  var oid = urlParams.get("oid2");
   var sub1 = urlParams.get("sub1");
   var sub2 = urlParams.get("sub2");
   var sub3 = urlParams.get("sub3");
   var sub4 = urlParams.get("sub4");
   var sub5 = urlParams.get("sub5");
-  document.getElementById('button-1').href="https://www.clik2trk.com/aff_c/?affid="+affid+"&oid=OFFER_ID&sub1="+sub1+"&sub2="+sub2+"&sub3="+sub3+"&sub4="+sub4+"&sub5="+sub5+"
-  document.getElementById('button-2').href="https://www.clik2trk.com/aff_c/?affid="+affid+"&oid=OFFER_ID&sub1="+sub1+"&sub2="+sub2+"&sub3="+sub3+"&sub4="+sub4+"&sub5="+sub5+"
+  document.getElementById('button-1').href="https://www.clik2trk.com/aff_c/?affid="+affid+"&oid="+oid+"&sub1="+sub1+"&sub2="+sub2+"&sub3="+sub3+"&sub4="+sub4+"&sub5="+sub5+""
+  document.getElementById('button-2').href="https://www.clik2trk.com/aff_c/?affid="+affid+"&oid="+oid+"&sub1="+sub1+"&sub2="+sub2+"&sub3="+sub3+"&sub4="+sub4+"&sub5="+sub5+""
   }
 </script>
     </main>
