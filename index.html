@@ -15,10 +15,18 @@
         .debug-panel { background: #2f3542; color: #a4b0be; padding: 15px; border-radius: 5px; font-family: monospace; margin-top: 40px; font-size: 13px; }
         .debug-title { color: #ff6b81; font-weight: bold; margin-bottom: 5px; }
     </style>
-//EF tracking script
+
 <script type="text/javascript"
     src="https://www.clik2trk.com/scripts/main.js"></script>
 
+</head>
+<body>
+
+    <header>
+        <div class="logo">⚡ TechVibe Magazine</div>
+        <div class="post-meta">Published July 2026 • 5 min read</div>
+
+        <!-- EF Click script -->
 <script type="text/javascript">
 EF.click({
     offer_id: EF.urlParameter('oid2'),
@@ -38,12 +46,6 @@ EF.click({
     transaction_id: EF.urlParameter('_ef_transaction_id'),
 });
 </script>
-</head>
-<body>
-
-    <header>
-        <div class="logo">⚡ TechVibe Magazine</div>
-        <div class="post-meta">Published July 2026 • 5 min read</div>
     </header>
 
     <main>
@@ -63,6 +65,20 @@ EF.click({
             <p>Never run out of battery again. This ultra-thin charger snaps right to the back of your phone and charges it to full in 20 minutes.</p>
             <a href="product.html" id="button-2" class="btn-buy track-link">View Deal Online &rarr;</a>
         </div>
+
+        <script>
+  window.onload = function() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var affid = urlParams.get("affid");
+  var sub1 = urlParams.get("sub1");
+  var sub2 = urlParams.get("sub2");
+  var sub3 = urlParams.get("sub3");
+  var sub4 = urlParams.get("sub4");
+  var sub5 = urlParams.get("sub5");
+  document.getElementById('button-1').href="https://www.clik2trk.com/aff_c/?affid="+affid+"&oid=OFFER_ID&sub1="+sub1+"&sub2="+sub2+"&sub3="+sub3+"&sub4="+sub4+"&sub5="+sub5+"
+  document.getElementById('button-2').href="https://www.clik2trk.com/aff_c/?affid="+affid+"&oid=OFFER_ID&sub1="+sub1+"&sub2="+sub2+"&sub3="+sub3+"&sub4="+sub4+"&sub5="+sub5+"
+  }
+</script>
     </main>
 
     <!-- Debug Panel so you can see what the script is doing without opening DevTools -->
