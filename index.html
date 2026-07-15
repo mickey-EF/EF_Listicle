@@ -16,105 +16,86 @@
         .debug-title { color: #ff6b81; font-weight: bold; margin-bottom: 5px; }
     </style>
 
-<script type="text/javascript"
-    src="https://www.clik2trk.com/scripts/main.js"></script>
-
+    <!-- 1. LOAD THE REAL EVERFLOW SDK -->
+    <script type="text/javascript" src="https://www.clik2trk.com/scripts/main.js"></script>
 </head>
 <body>
 
     <header>
         <div class="logo">⚡ TechVibe Magazine</div>
         <div class="post-meta">Published July 2026 • 5 min read</div>
-
-        <!-- EF Click script -->
-<script type="text/javascript">
-EF.click({
-    offer_id: EF.urlParameter('oid2'),
-    affiliate_id: EF.urlParameter('affid2'),
-    source_id: EF.urlParameter('source_id'),
-    sub1: EF.urlParameter('sub1'),
-    sub2: EF.urlParameter('sub2'),
-    sub3: EF.urlParameter('sub3'),
-    sub4: EF.urlParameter('sub4'),
-    sub5: EF.urlParameter('sub5'),
-    sub6: EF.urlParameter('sub6'),
-    sub7: EF.urlParameter('sub7'),
-    sub8: EF.urlParameter('sub8'),
-    sub9: EF.urlParameter('sub9'),
-    sub10: EF.urlParameter('sub10'),
-    uid: EF.urlParameter('uid'),
-    transaction_id: EF.urlParameter('_ef_transaction_id'),
-});
-</script>
     </header>
 
     <main>
         <h1>The 3 Life-Changing Gadgets You Need in 2026</h1>
-        <p>We tested dozens of the latest tech releases this year. If you want to upgrade your daily routine, these are the absolute best items worth your money.</p>
+        <p>We tested dozens of the latest tech releases this year.</p>
 
         <!-- Listicle Item 1 -->
         <div class="listicle-item">
             <h2>1. AeroPods Pro Max (2026 Edition)</h2>
-            <p>The active noise cancellation on these new headphones is scary good. It completely blocks out coffee shop chatter and subway noise.</p>
+            <p>The active noise cancellation on these new headphones is scary good.</p>
+            <!-- Keep these clean pointing to your product page -->
             <a href="product.html" id="button-1" class="btn-buy track-link">Check Price on Amazon &rarr;</a>
         </div>
 
         <!-- Listicle Item 2 -->
         <div class="listicle-item">
             <h2>2. ChargeGrip Magnetic Power Bank</h2>
-            <p>Never run out of battery again. This ultra-thin charger snaps right to the back of your phone and charges it to full in 20 minutes.</p>
+            <p>Never run out of battery again.</p>
             <a href="product.html" id="button-2" class="btn-buy track-link">View Deal Online &rarr;</a>
         </div>
-
-        <script>
-  window.onload = function() {
-  var urlParams = new URLSearchParams(window.location.search);
-  var affid = urlParams.get("affid2");
-  var oid = urlParams.get("oid2");
-  var sub1 = urlParams.get("sub1");
-  var sub2 = urlParams.get("sub2");
-  var sub3 = urlParams.get("sub3");
-  var sub4 = urlParams.get("sub4");
-  var sub5 = urlParams.get("sub5");
-  document.getElementById('button-1').href="https://www.clik2trk.com/aff_c/?affid="+affid+"&oid="+oid+"&sub1="+sub1+"&sub2="+sub2+"&sub3="+sub3+"&sub4="+sub4+"&sub5="+sub5+""
-  document.getElementById('button-2').href="https://www.clik2trk.com/aff_c/?affid="+affid+"&oid="+oid+"&sub1="+sub1+"&sub2="+sub2+"&sub3="+sub3+"&sub4="+sub4+"&sub5="+sub5+""
-  }
-</script>
     </main>
 
-    <!-- Debug Panel so you can see what the script is doing without opening DevTools -->
+    <!-- Clear Live Debug Panel -->
     <div class="debug-panel">
-        <div class="debug-title">[EVERFLOW MOCK SCRIPT LOGS]</div>
-        <div id="debug-log">Waiting for URL parameters...</div>
+        <div class="debug-title">[EVERFLOW SDK LIVE LOGS]</div>
+        <div id="debug-log">Checking URL for tracking parameters...</div>
     </div>
 
-    <script>
-        // --- SIMULATED EVERFLOW SCRIPT ---
+    <!-- 2. THE SINGLE CONTROL SCRIPT -->
+    <script type="text/javascript">
+        const logDiv = document.getElementById('debug-log');
         
-        // 1. Grab parameters from the URL (e.g., ?oid=123&affid=456)
-        const urlParams = new URLSearchParams(window.location.search);
-        const offerId = urlParams.get('oid');
-        const affiliateId = urlParams.get('affid');
-        const debugLog = document.getElementById('debug-log');
+        // Read your custom parameters
+        const oid2 = EF.urlParameter('oid2');
+        const affid2 = EF.urlParameter('affid2');
 
-        if (offerId && affiliateId) {
-            // Fake creating a Transaction ID like Everflow does
-            const mockTransactionId = "EF_TID_" + Math.random().toString(36).substr(2, 9).toUpperCase();
-            
-            // Save it to Session Storage so the next page can read it (simulating a tracking cookie)
-            sessionStorage.setItem('ef_transaction_id', mockTransactionId);
-            
-            debugLog.innerHTML = `✅ Successfully captured click!<br>• Offer ID: ${offerId}<br>• Partner ID: ${affid}<br>• Generated Transaction ID: ${mockTransactionId}<br><br>👉 Now click one of the green buttons above to test the redirect!`;
-            console.log("Everflow Click Registered:", { offerId, affiliateId, mockTransactionId });
+        if (oid2 && affid2) {
+            logDiv.innerHTML = `⏳ Parameters found (oid2: ${oid2}, affid2: ${affid2}). Firing click to Everflow...`;
 
-            // 2. Direct Linking Script Magic: Append the transaction ID to outbound URLs
-            const trackingLinks = document.querySelectorAll('.track-link');
-            trackingLinks.forEach(link => {
-                const currentHref = link.getAttribute('href');
-                link.setAttribute('href', `${currentHref}?_ef_tid=${mockTransactionId}`);
+            // Fire the real Everflow click registration
+            EF.click({
+                offer_id: oid2,
+                affiliate_id: affid2,
+                source_id: EF.urlParameter('source_id'),
+                sub1: EF.urlParameter('sub1'),
+                sub2: EF.urlParameter('sub2'),
+                sub3: EF.urlParameter('sub3'),
+                sub4: EF.urlParameter('sub4'),
+                sub5: EF.urlParameter('sub5'),
+                sub6: EF.urlParameter('sub6'),
+                sub7: EF.urlParameter('sub7'),
+                sub8: EF.urlParameter('sub8'),
+                sub9: EF.urlParameter('sub9'),
+                sub10: EF.urlParameter('sub10'),
+                uid: EF.urlParameter('uid'),
+                transaction_id: EF.urlParameter('_ef_transaction_id'),
+            }).then(function(transactionId) {
+                // This block runs ONLY after Everflow responds successfully!
+                if (transactionId) {
+                    logDiv.innerHTML = `✅ Everflow Click Tracked!<br>• Generated Transaction ID: <strong style="color:white;">${transactionId}</strong><br>• Links updated dynamically.`;
+                    
+                    // Direct Linking Magic: Pass the fresh Transaction ID straight to your product buttons
+                    document.querySelectorAll('.track-link').forEach(link => {
+                        link.href = "product.html?_ef_transaction_id=" + transactionId;
+                    });
+                } else {
+                    logDiv.innerHTML = `⚠️ Click script ran, but Everflow didn't generate a Transaction ID. (Make sure Direct Linking is turned on inside your Everflow Offer settings).`;
+                }
             });
+
         } else {
-            debugLog.innerHTML = `❌ Missing tracking parameters.<br>To test this properly, add this to the end of your browser's address bar and press Enter:<br><br><strong style="color:white;">?oid=999&affid=777</strong>`;
+            logDiv.innerHTML = `❌ Missing tracking parameters.<br>To test, add this to your local URL bar:<br><br><strong style="color:white;">?oid2=123&affid2=456</strong>`;
         }
     </script>
 </body>
