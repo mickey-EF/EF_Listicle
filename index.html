@@ -16,7 +16,7 @@
         .debug-title { color: #ff6b81; font-weight: bold; margin-bottom: 5px; }
     </style>
 
-    <!-- 1. LOAD THE REAL EVERFLOW SDK -->
+    <!-- 1. LOAD THE EVERFLOW SDK -->
     <script type="text/javascript" src="https://www.clik2trk.com/scripts/main.js"></script>
 </head>
 <body>
@@ -59,11 +59,12 @@
         // Read your custom parameters
         const oid2 = EF.urlParameter('oid2');
         const affid2 = EF.urlParameter('affid2');
+        var elems = document.body.getElementsByTagName("a");
 
         if (oid2 && affid2) {
             logDiv.innerHTML = `⏳ Parameters found (oid2: ${oid2}, affid2: ${affid2}). Firing click to Everflow...`;
 
-            // Fire the real Everflow click registration
+            // Fire the Everflow click
             EF.click({
                 offer_id: oid2,
                 affiliate_id: affid2,
@@ -81,14 +82,17 @@
                 uid: EF.urlParameter('uid'),
                 transaction_id: EF.urlParameter('_ef_transaction_id'),
             }).then(function(transactionId) {
-                // This block runs ONLY after Everflow responds successfully!
                 if (transactionId) {
                     logDiv.innerHTML = `✅ Everflow Click Tracked!<br>• Generated Transaction ID: <strong style="color:white;">${transactionId}</strong><br>• Links updated dynamically.`;
                     
-                    // Direct Linking Magic: Pass the fresh Transaction ID straight to your product buttons
-                    document.querySelectorAll('.track-link').forEach(link => {
-                        link.href = "product.html?_ef_transaction_id=" + transactionId;
-                    });
+                    // Pass the Transaction ID to product buttons
+                   for (var i = 0; i < elems.length; i++) {
+                            if (elems[i].href.includes(siteUrl)) {
+                                var url = new URL(elems[i].href);
+                                url.searchParams.set("_ef_transaction_id", transaction_id);
+                                elems[i].href = url.href;
+                            }
+                        }
                 } else {
                     logDiv.innerHTML = `⚠️ Click script ran, but Everflow didn't generate a Transaction ID. (Make sure Direct Linking is turned on inside your Everflow Offer settings).`;
                 }
