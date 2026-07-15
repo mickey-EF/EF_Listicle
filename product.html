@@ -12,6 +12,9 @@
         .btn-checkout:hover { background: #ff6b81; }
         .debug-panel { background: #2f3542; color: #a4b0be; padding: 15px; border-radius: 5px; font-family: monospace; margin-top: 30px; font-size: 13px; text-align: left; }
     </style>
+
+    <!-- 1. LOAD THE REAL EVERFLOW SDK HERE IN THE HEAD -->
+    <script type="text/javascript" src="https://www.clik2trk.com/scripts/main.js"></script>
 </head>
 <body>
 
@@ -27,24 +30,43 @@
     </div>
 
     <script>
-        // --- SIMULATED EVERFLOW CONVERSION SCRIPT ---
+        // --- REAL EVERFLOW CONVERSION SCRIPT ---
         
-        // 1. Look for the transaction ID in the URL or Session Storage
+        // 1. Look for the transaction ID across URL parameters and Session Storage
+        // (Supports both '_ef_tid' and '_ef_transaction_id' so it works no matter which link generated it)
         const urlParams = new URLSearchParams(window.location.search);
-        let transactionId = urlParams.get('_ef_tid') || sessionStorage.getItem('ef_transaction_id');
+        let transactionId = urlParams.get('_ef_tid') || 
+                            urlParams.get('_ef_transaction_id') || 
+                            sessionStorage.getItem('ef_transaction_id') || 
+                            sessionStorage.getItem('_ef_transaction_id');
+                            
         const logDiv = document.getElementById('conversion-log');
 
         if (transactionId) {
             logDiv.innerHTML = `🔗 Tracking Found!<br>• Active Transaction ID: <strong style="color:white;">${transactionId}</strong><br><br>Click the "Complete Purchase" button above to fire the conversion pixel.`;
         } else {
-            logDiv.innerHTML = `⚠️ No Tracking Data Found. If you purchase now, the affiliate will get $0 commission. Go back to index.html and make sure you use the test parameters.`;
+            logDiv.innerHTML = `⚠️ No Tracking Data Found. If you purchase now, the affiliate will get $0 commission. Go back to your listicle (index.html) and make sure you have test parameters in the URL.`;
         }
 
         // 2. Fire conversion postback when button is clicked
         document.getElementById('buy-btn').addEventListener('click', () => {
             if (transactionId) {
-                logDiv.innerHTML = `🎉 <strong style="color:#2ed573;">CONVERSION SUCCESSFUL!</strong><br>Sent Transaction <strong style="color:white;">${transactionId}</strong> to Everflow.<br>Affiliate commission has been locked in.`;
-                console.log("Everflow Conversion Postback Fired successfully for:", transactionId);
+                logDiv.innerHTML = `⏳ Firing conversion to Everflow...`;
+
+                // 2. Call the Everflow conversion SDK function directly using pure JS
+                EF.conversion({
+                    offer_id: 2141,
+                    transaction_id: transactionId // Passing this directly makes attribution 100% accurate!
+                }).then(function(response) {
+                    // This block triggers once Everflow receives the data
+                    logDiv.innerHTML = `🎉 <strong style="color:#2ed573;">CONVERSION SUCCESSFUL!</strong><br>Sent Transaction <strong style="color:white;">${transactionId}</strong> to Everflow.<br>Affiliate commission has been locked in.`;
+                    console.log("Everflow Conversion Postback Fired successfully:", response);
+                }).catch(function(error) {
+                    // Fallback error catcher
+                    logDiv.innerHTML = `❌ <strong style="color:#ff4757;">CONVERSION ERROR:</strong><br>${error.message || error}`;
+                    console.error("Everflow conversion failed:", error);
+                });
+
             } else {
                 alert("Purchase went through, but no affiliate tracking ID was present!");
             }
