@@ -34,7 +34,6 @@
         <div class="listicle-item">
             <h2>1. AeroPods Pro Max (2026 Edition)</h2>
             <p>The active noise cancellation on these new headphones is scary good.</p>
-            <!-- Keep these clean pointing to your product page -->
             <a href="product.html" id="button-1" class="btn-buy track-link">Check Price on Amazon &rarr;</a>
         </div>
 
@@ -56,15 +55,35 @@
     <script type="text/javascript">
         const logDiv = document.getElementById('debug-log');
         
-        // Read your custom parameters
+        // Target domain/file we want to attach tracking parameters to
+        var siteUrl = "product.html"; 
+
+        // Read URL parameters
         const oid2 = EF.urlParameter('oid2');
         const affid2 = EF.urlParameter('affid2');
+        const tid = EF.urlParameter('_ef_transaction_id');
         var elems = document.body.getElementsByTagName("a");
 
-        if (oid2 && affid2) {
+        // Helper to safely append TID
+        function updateUrl(trackingId) {
+            for (var i = 0; i < elems.length; i++) {
+                if (elems[i].href.includes(siteUrl)) {
+                    var url = new URL(elems[i].href);
+                    url.searchParams.set("_ef_transaction_id", trackingId);
+                    elems[i].href = url.href;
+                }
+            }
+        }
+
+        if (tid) {
+            // Checks if TID is in URL (Redirect link)
+            logDiv.innerHTML = `⏳ Redirect link detected (TID: ${tid}). Passing it forward...`;
+            updateUrl(tid);
+        } 
+        else if (oid2 && affid2) {
+            // Check if OID and AFFID are in URL Params and fires click script.
             logDiv.innerHTML = `⏳ Parameters found (oid2: ${oid2}, affid2: ${affid2}). Firing click to Everflow...`;
 
-            // Fire the Everflow click
             EF.click({
                 offer_id: oid2,
                 affiliate_id: affid2,
@@ -85,21 +104,16 @@
                 if (transactionId) {
                     logDiv.innerHTML = `✅ Everflow Click Tracked!<br>• Generated Transaction ID: <strong style="color:white;">${transactionId}</strong><br>• Links updated dynamically.`;
                     
-                    // Pass the Transaction ID to product buttons
-                   for (var i = 0; i < elems.length; i++) {
-                            if (elems[i].href.includes(siteUrl)) {
-                                var url = new URL(elems[i].href);
-                                url.searchParams.set("_ef_transaction_id", transaction_id);
-                                elems[i].href = url.href;
-                            }
-                        }
+                    // Call our helper function to append URL
+                    updateUrl(transactionId);
                 } else {
-                    logDiv.innerHTML = `⚠️ Click script ran, but Everflow didn't generate a Transaction ID. (Make sure Direct Linking is turned on inside your Everflow Offer settings).`;
+                    logDiv.innerHTML = `⚠️ Click fired, but Everflow didn't return a Transaction ID.`;
                 }
             });
-
-        } else {
-            logDiv.innerHTML = `❌ Missing tracking parameters.<br>To test, add this to your local URL bar:<br><br><strong style="color:white;">?oid2=123&affid2=456</strong>`;
+        } 
+        else {
+            // Path C: No parameters in URL at all
+            logDiv.innerHTML = `❌ No tracking parameters found. Try adding <strong style="color:white;">?oid2=123&affid2=456</strong> to your URL bar.`;
         }
     </script>
 </body>
